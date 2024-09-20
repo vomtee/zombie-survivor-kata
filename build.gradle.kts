@@ -11,6 +11,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    // https://kotest.io/docs/assertions/assertions.html
+    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
+
 }
 
 tasks.test {

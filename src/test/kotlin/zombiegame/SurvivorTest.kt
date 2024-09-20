@@ -1,73 +1,89 @@
 package zombiegame
 
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import Survivor
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.beEmpty
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import zombiegame.Equipment.BASEBALL_BAT
-import zombiegame.Equipment.BOTTLED_WATER
-import zombiegame.Equipment.FRYING_PAN
-import zombiegame.Equipment.KATANA
-import zombiegame.Equipment.MOLOTOV
-import zombiegame.Equipment.PISTOL
+
 
 class SurvivorTest {
+    lateinit var survivor: Survivor
 
-    @Test
-    fun `iteration 01`() {
-        val survivor = Survivor("Mark")
-        assertEquals("Mark", survivor.name)
-        assertTrue(survivor.alive)
-        assertEquals(3, survivor.actions)
-        assertEquals(0, survivor.wounds)
-
-        survivor.receiveWound()
-
-        assertTrue(survivor.alive)
-        assertEquals(1, survivor.wounds)
-
-        survivor.receiveWound()
-
-        assertFalse(survivor.alive)
-        assertEquals(2, survivor.wounds)
-
-
-        survivor.receiveWound()
-
-        assertFalse(survivor.alive)
-        assertEquals(2, survivor.wounds)
+    @BeforeEach
+    fun setup() {
+        survivor = Survivor(" Heinz")
     }
 
     @Test
-    fun `iteration 02`() {
-        val survivor = Survivor("Gleb")
-        assertEquals(5, survivor.inventory.capacity)
+    fun `survivor has a name`() {
+        survivor.name shouldNot beEmpty()
+    }
 
-        assertTrue(survivor.inventory.add(KATANA))
-        assertEquals(1, survivor.inventory.items.size)
+    @Test
+    fun `survivor has no wounds`() {
+        survivor.wounds shouldBe 0
+    }
 
-        assertTrue(survivor.inventory.add(PISTOL))
-        assertEquals(2, survivor.inventory.items.size)
+    @Test
+    fun `survivor should be alive`() {
+        survivor.dead shouldNotBe true
+    }
 
-        assertTrue(survivor.inventory.add(FRYING_PAN))
-        assertEquals(3, survivor.inventory.items.size)
+    @Test
+    fun `survivor should be alive after receiving 1 wound`() {
+        survivor.wound()
+        survivor.dead shouldNotBe true
+    }
 
-        assertTrue(survivor.inventory.add(BASEBALL_BAT))
-        assertEquals(4, survivor.inventory.items.size)
+    @Test
+    fun `survivor with 2 wounds should be dead`() {
+        survivor.wound()
+        survivor.wound()
+        survivor.dead shouldBe true
+    }
 
-        assertTrue(survivor.inventory.add(BOTTLED_WATER))
-        assertEquals(5, survivor.inventory.items.size)
+    @Test
+    fun `survivor should ignore receiving more than 2 wounds`() {
+        survivor.wound()
+        survivor.wound()
+        survivor.wound()
 
-        assertFalse(survivor.inventory.add(MOLOTOV))
-        assertEquals(5, survivor.inventory.items.size)
+        survivor.dead shouldBe true
+        survivor.wounds shouldBe 2
+    }
 
-        assertEquals(listOf(KATANA,  PISTOL, FRYING_PAN, BASEBALL_BAT, BOTTLED_WATER),
-            survivor.inventory.items)
+    @Test
+    fun `survivor should initially be able to perform 3 actions`() {
+        var canAct = true
+        canAct = canAct && survivor.act()
+        canAct = canAct && survivor.act()
+        canAct = canAct && survivor.act()
 
-        assertFalse(survivor.inventory.putInHand(MOLOTOV))
-        assertTrue(survivor.inventory.equipmentInHands.items.isEmpty())
+        canAct shouldBe true
+    }
 
-        assertTrue(survivor.inventory.putInHand(Equipment.entries.first()))
+    @Test
+    fun `survivor cannot perform more than 3 actions`() {
+        survivor.act()
+        survivor.act()
+        survivor.act()
+
+        survivor.act() shouldBe false
+    }
+
+    @Test
+    fun `survivor should be able to perform actions again with the next turn`() {
+        survivor.act()
+        survivor.act()
+        survivor.act()
+        survivor.act() shouldBe false
+
+        survivor.nextTurn()
+        survivor.act() shouldBe true
 
     }
+
 }

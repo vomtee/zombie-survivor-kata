@@ -87,14 +87,14 @@ class SurvivorTest {
     }
 
     @Test
-    fun `survivor initally carries nothing` () {
+    fun `survivor initially carries nothing` () {
         survivor.equipment.amount shouldBe 0
     }
 
     @Test
     fun `survivor can carry 5 items` () {
         repeat(5) {
-            survivor.equipment.add(EquipmentType.BASEBALL_BAT)
+            survivor.equipment.add(EquipmentType.ANYTHING)
         }
         survivor.equipment.amount shouldBe 5
     }

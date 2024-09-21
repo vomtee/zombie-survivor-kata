@@ -1,21 +1,25 @@
 package zombiegame
 
 const val MAX_EQUIPMENT = 5
-class Equipment {
+class Equipment : EquipmentHolder {
     private val items = mutableListOf<EquipmentType>()
-    val amount: Int
+    override val amount: Int
         get() = this.items.size
 
-    fun add(item: EquipmentType) {
-        items.add(item)
+    override val maxAmount: Int
+        get() = MAX_EQUIPMENT
+
+    override fun add(item: EquipmentType): Boolean {
+        return items.add(item)
     }
 }
 
+interface EquipmentHolder {
+    val amount: Int
+    val maxAmount: Int
+    fun add(item: EquipmentType) : Boolean
+}
+
 enum class EquipmentType {
-    BASEBALL_BAT,
-    FRYING_PAN,
-    KATANA,
-    PISTOL,
-    BOTTLED_WATER,
-    MOLOTOV,
+    ANYTHING,
 }

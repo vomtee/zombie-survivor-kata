@@ -107,4 +107,15 @@ class SurvivorTest {
         survivor.equipment.amount shouldBe 5
     }
 
+    @Test
+    fun `survivor carries 2 items in hand and 3 items in reserve` () {
+        repeat(5) {
+            survivor.equipment.add(EquipmentType.ANYTHING)
+        }
+
+        survivor.equipment.amount shouldBe 5
+        survivor.equipment.inHands.amount shouldBe 2
+        survivor.equipment.inReserve.amount shouldBe 3
+    }
+
 }

@@ -35,3 +35,4 @@ class Survivor(val name: String) {
         }
     }
 }
+

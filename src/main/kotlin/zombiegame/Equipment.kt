@@ -1,17 +1,16 @@
 package zombiegame
 
-const val MAX_EQUIPMENT = 5
 class Equipment : EquipmentHolder {
-    private val items = mutableListOf<EquipmentType>()
+    val inHands = InHands()
+    val inReserve = InReserve()
     override val amount: Int
-        get() = this.items.size
+        get() = this.inHands.amount + this.inReserve.amount
 
     override val maxAmount: Int
-        get() = MAX_EQUIPMENT
+        get() = this.inHands.maxAmount + this.inReserve.maxAmount
 
-    override fun addItemOperation(item: EquipmentType): Boolean {
-        return items.add(item)
-    }
+    override fun addItemOperation(item: EquipmentType): Boolean =
+        if (inHands.add(item)) true else inReserve.add(item)
 }
 
 interface EquipmentHolder {
@@ -20,13 +19,33 @@ interface EquipmentHolder {
     fun addItemOperation(item: EquipmentType): Boolean
 }
 
-fun EquipmentHolder.add(item: EquipmentType): Boolean {
-    return if (amount < maxAmount) {
-        addItemOperation(item)
-    } else {
-        false
+class InHands : EquipmentHolder {
+    private val items = mutableListOf<EquipmentType>()
+    override val amount: Int
+        get() = items.size
+    override val maxAmount: Int
+        get() = 2
+
+    override fun addItemOperation(item: EquipmentType): Boolean {
+        return items.add(item)
     }
 }
+
+class InReserve : EquipmentHolder {
+    private val items = mutableListOf<EquipmentType>()
+    override val amount: Int
+        get() = items.size
+    override val maxAmount: Int
+        get() = 3
+
+    override fun addItemOperation(item: EquipmentType): Boolean {
+        return items.add(item)
+    }
+}
+
+fun EquipmentHolder.add(item: EquipmentType): Boolean =
+    if (amount < maxAmount) addItemOperation(item) else false
+
 
 enum class EquipmentType {
     ANYTHING,

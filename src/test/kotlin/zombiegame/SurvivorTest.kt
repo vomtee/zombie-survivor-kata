@@ -85,5 +85,4 @@ class SurvivorTest {
         survivor.act() shouldBe true
 
     }
-
 }

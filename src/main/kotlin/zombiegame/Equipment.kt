@@ -9,19 +9,23 @@ class Equipment : EquipmentHolder {
     override val maxAmount: Int
         get() = MAX_EQUIPMENT
 
-    override fun add(item: EquipmentType): Boolean {
-        return if (amount < maxAmount) {
-            items.add(item)
-        } else {
-            false
-        }
+    override fun addItemOperation(item: EquipmentType): Boolean {
+        return items.add(item)
     }
 }
 
 interface EquipmentHolder {
     val amount: Int
     val maxAmount: Int
-    fun add(item: EquipmentType) : Boolean
+    fun addItemOperation(item: EquipmentType): Boolean
+}
+
+fun EquipmentHolder.add(item: EquipmentType): Boolean {
+    return if (amount < maxAmount) {
+        addItemOperation(item)
+    } else {
+        false
+    }
 }
 
 enum class EquipmentType {

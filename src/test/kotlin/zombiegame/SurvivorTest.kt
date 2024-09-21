@@ -99,4 +99,12 @@ class SurvivorTest {
         survivor.equipment.amount shouldBe 5
     }
 
+    @Test
+    fun `survivor can carry not more than 5 items` () {
+        repeat(6) {
+            survivor.equipment.add(EquipmentType.ANYTHING)
+        }
+        survivor.equipment.amount shouldBe 5
+    }
+
 }

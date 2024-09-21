@@ -10,7 +10,11 @@ class Equipment : EquipmentHolder {
         get() = MAX_EQUIPMENT
 
     override fun add(item: EquipmentType): Boolean {
-        return items.add(item)
+        return if (amount < maxAmount) {
+            items.add(item)
+        } else {
+            false
+        }
     }
 }
 

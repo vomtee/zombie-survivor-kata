@@ -9,6 +9,9 @@ class Equipment : EquipmentHolder {
     override val maxAmount: Int
         get() = this.inHands.maxAmount + this.inReserve.maxAmount
 
+    override val content: List<EquipmentType>
+        get() = inHands.content + inReserve.content
+
     override fun addItemOperation(item: EquipmentType): Boolean =
         if (inHands.add(item)) true else inReserve.add(item)
 }
@@ -16,6 +19,7 @@ class Equipment : EquipmentHolder {
 interface EquipmentHolder {
     val amount: Int
     val maxAmount: Int
+    val content: List<EquipmentType>
     fun addItemOperation(item: EquipmentType): Boolean
 }
 
@@ -26,6 +30,8 @@ abstract class EquipmentList : EquipmentHolder {
     private val items = mutableListOf<EquipmentType>()
     override val amount: Int
         get() = items.size
+    override val content: List<EquipmentType>
+        get() = items.toList()
 
     override fun addItemOperation(item: EquipmentType): Boolean {
         return items.add(item)
@@ -33,19 +39,22 @@ abstract class EquipmentList : EquipmentHolder {
 }
 
 private const val MAX_IN_HAND_AMOUNT = 2
-
 class InHands : EquipmentList() {
     override val maxAmount: Int
         get() = MAX_IN_HAND_AMOUNT
 }
 
 private const val MAX_IN_RESERVE_AMOUNT = 3
-
 class InReserve : EquipmentList() {
     override val maxAmount: Int
         get() = MAX_IN_RESERVE_AMOUNT
 }
 
 enum class EquipmentType {
-    ANYTHING,
+    BASEBALL_BAT,
+    FRYING_PAN,
+    KATANA,
+    PISTOL,
+    BOTTLED_WATER,
+    MOLOTOV,
 }

@@ -94,7 +94,7 @@ class SurvivorTest {
     @Test
     fun `survivor can carry 5 items` () {
         repeat(5) {
-            survivor.equipment.add(EquipmentType.ANYTHING)
+            survivor.equipment.add(EquipmentType.BASEBALL_BAT)
         }
         survivor.equipment.amount shouldBe 5
     }
@@ -102,7 +102,7 @@ class SurvivorTest {
     @Test
     fun `survivor can carry not more than 5 items` () {
         repeat(6) {
-            survivor.equipment.add(EquipmentType.ANYTHING)
+            survivor.equipment.add(EquipmentType.BASEBALL_BAT)
         }
         survivor.equipment.amount shouldBe 5
     }
@@ -110,7 +110,7 @@ class SurvivorTest {
     @Test
     fun `survivor carries 2 items in hand and 3 items in reserve` () {
         repeat(5) {
-            survivor.equipment.add(EquipmentType.ANYTHING)
+            survivor.equipment.add(EquipmentType.BASEBALL_BAT)
         }
 
         survivor.equipment.amount shouldBe 5

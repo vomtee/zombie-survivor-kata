@@ -61,7 +61,6 @@ abstract class EquipmentList : EquipmentHolder {
 
 class InHands : EquipmentList() {
     override val maxAmount: Int = MAX_IN_HAND_AMOUNT
-
 }
 
 class InReserve : EquipmentList(), ShrinkableEquipmentHolder {

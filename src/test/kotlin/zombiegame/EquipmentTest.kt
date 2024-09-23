@@ -22,6 +22,7 @@ class EquipmentTest {
         repeat(5) {
             equipment.add(BASEBALL_BAT)
         }
+
         equipment.amount shouldBe 5
     }
 
@@ -30,6 +31,7 @@ class EquipmentTest {
         repeat(6) {
             equipment.add(BASEBALL_BAT)
         }
+
         equipment.amount shouldBe 5
     }
 
@@ -53,7 +55,5 @@ class EquipmentTest {
 
         equipment.inHands.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
         equipment.inReserve.content shouldBeEqual listOf(KATANA, PISTOL, BOTTLED_WATER)
-
     }
-
 }

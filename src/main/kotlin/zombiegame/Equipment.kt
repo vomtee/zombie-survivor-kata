@@ -19,12 +19,16 @@ interface EquipmentHolder {
     fun addItemOperation(item: EquipmentType): Boolean
 }
 
+interface ShrinkableEquipmentHolder : EquipmentHolder {
+    fun decreaseMaxAmount(): EquipmentType?
+}
+
 fun EquipmentHolder.add(item: EquipmentType): Boolean =
     if (amount < maxAmount) addItemOperation(item) else false
 
 class Equipment : EquipmentHolder {
-    val inHands = InHands()
-    val inReserve = InReserve()
+    val inHands: EquipmentHolder = InHands()
+    val inReserve: ShrinkableEquipmentHolder = InReserve()
 
     override val amount: Int
         get() = this.inHands.amount + this.inReserve.amount
@@ -43,7 +47,7 @@ class Equipment : EquipmentHolder {
 }
 
 abstract class EquipmentList : EquipmentHolder {
-    private val items = mutableListOf<EquipmentType>()
+    protected val items = mutableListOf<EquipmentType>()
 
     override val amount: Int
         get() = items.size
@@ -56,12 +60,23 @@ abstract class EquipmentList : EquipmentHolder {
 }
 
 class InHands : EquipmentList() {
-    override val maxAmount: Int
-        get() = MAX_IN_HAND_AMOUNT
+    override val maxAmount: Int = MAX_IN_HAND_AMOUNT
+
 }
 
-class InReserve : EquipmentList() {
-    override val maxAmount: Int
-        get() = MAX_IN_RESERVE_AMOUNT
+class InReserve : EquipmentList(), ShrinkableEquipmentHolder {
+    override var maxAmount: Int = MAX_IN_RESERVE_AMOUNT
+
+    override fun decreaseMaxAmount(): EquipmentType? {
+        var result: EquipmentType? = null
+
+        val lowerMaxAmount = maxAmount - 1
+        if (amount > lowerMaxAmount) {
+            result = items.removeLast()
+        }
+
+        maxAmount = lowerMaxAmount
+        return result
+    }
 }
 

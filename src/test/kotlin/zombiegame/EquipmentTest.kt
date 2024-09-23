@@ -56,4 +56,29 @@ class EquipmentTest {
         equipment.inHands.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
         equipment.inReserve.content shouldBeEqual listOf(KATANA, PISTOL, BOTTLED_WATER)
     }
+
+    @Test
+    fun `decreaseMaxAmount() should not remove items if InReserve holds 2 items`() {
+        val reserve: ShrinkableEquipmentHolder = InReserve()
+        reserve.add(BASEBALL_BAT)
+        reserve.add(FRYING_PAN)
+
+        reserve.decreaseMaxAmount() shouldBe null
+        reserve.maxAmount shouldBe 2
+
+        reserve.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
+    }
+
+    @Test
+    fun `decreaseMaxAmount() should remove 1 item if InReserve holds 3 items`() {
+        val reserve: ShrinkableEquipmentHolder = InReserve()
+        reserve.add(BASEBALL_BAT)
+        reserve.add(FRYING_PAN)
+        reserve.add(KATANA)
+
+        reserve.decreaseMaxAmount() shouldBe KATANA
+        reserve.maxAmount shouldBe 2
+
+        reserve.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
+    }
 }

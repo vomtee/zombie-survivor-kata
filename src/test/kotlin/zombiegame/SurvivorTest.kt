@@ -77,6 +77,5 @@ class SurvivorTest {
 
         survivor.nextTurn()
         survivor.act() shouldBe true
-
     }
 }

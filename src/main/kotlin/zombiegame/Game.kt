@@ -1,8 +1,9 @@
 package zombiegame
 
 import Survivor
+import SurvivorObserver
 
-class Game {
+class Game: SurvivorObserver {
     private val nameToSurvivor = mutableMapOf<String, Survivor>()
     val amountOfSurvivors
         get() = nameToSurvivor.size
@@ -17,7 +18,13 @@ class Game {
 
         else -> {
             nameToSurvivor[survivor.name] = survivor
+            survivor.addObserver(this)
             true
         }
     }
+
+    override fun notifyDead(survivor: Survivor) {
+        nameToSurvivor.remove(survivor.name)
+    }
 }
+

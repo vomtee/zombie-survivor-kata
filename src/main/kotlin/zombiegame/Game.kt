@@ -7,7 +7,8 @@ class Game {
     val amountOfSurvivors
         get() = nameToSurvivor.size
 
-    fun add(survivor: Survivor) {
+    fun add(survivor: Survivor) : Boolean {
         nameToSurvivor[survivor.name] = survivor
+        return true
     }
 }

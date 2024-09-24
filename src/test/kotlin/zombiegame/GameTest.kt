@@ -1,0 +1,3 @@
+package zombiegame
+
+class GameTest

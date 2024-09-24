@@ -1,5 +1,11 @@
 package zombiegame
 
+import Survivor
+
 class Game {
-    val amountOfSurvivors: Int = 0
+    val amountOfSurvivors
+        get() = 0
+
+    fun add(survivor: Survivor) {
+    }
 }

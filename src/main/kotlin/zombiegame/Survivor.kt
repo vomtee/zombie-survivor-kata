@@ -30,6 +30,8 @@ class Survivor(val name: String) {
         }
 
         wounds++
+        equipment.decreaseMaxAmount()
+
         if (wounds >= MAX_WOUNDS) {
             dead = true
         }

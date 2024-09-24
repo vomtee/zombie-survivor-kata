@@ -6,6 +6,11 @@ import io.kotest.matchers.shouldNot
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.beEmpty
 import org.junit.jupiter.api.Test
+import zombiegame.EquipmentType.BASEBALL_BAT
+import zombiegame.EquipmentType.BOTTLED_WATER
+import zombiegame.EquipmentType.FRYING_PAN
+import zombiegame.EquipmentType.KATANA
+import zombiegame.EquipmentType.PISTOL
 
 class SurvivorTest {
     private val survivor: Survivor = Survivor("Local Horst")
@@ -78,4 +83,22 @@ class SurvivorTest {
         survivor.nextTurn()
         survivor.act() shouldBe true
     }
+
+    @Test
+    fun `equipment should lose one item when max amount is less then amount of items in equipment ` () {
+        val equipment = survivor.equipment
+        equipment.add(BASEBALL_BAT)
+        equipment.add(FRYING_PAN)
+        equipment.add(KATANA)
+        equipment.add(PISTOL)
+        equipment.add(BOTTLED_WATER)
+
+        survivor.wound()
+        equipment.content shouldBe listOf(BASEBALL_BAT, FRYING_PAN, KATANA, PISTOL)
+        survivor.wound()
+        equipment.content shouldBe listOf(BASEBALL_BAT, FRYING_PAN, KATANA)
+        survivor.wound()
+        equipment.content shouldBe listOf(BASEBALL_BAT, FRYING_PAN, KATANA)
+    }
+
 }

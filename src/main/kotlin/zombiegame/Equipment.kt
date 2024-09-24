@@ -26,7 +26,7 @@ interface ShrinkableEquipmentHolder : EquipmentHolder {
 fun EquipmentHolder.add(item: EquipmentType): Boolean =
     if (amount < maxAmount) addItemOperation(item) else false
 
-class Equipment : EquipmentHolder {
+class Equipment : ShrinkableEquipmentHolder {
     val inHands: EquipmentHolder = InHands()
     val inReserve: ShrinkableEquipmentHolder = InReserve()
 
@@ -44,6 +44,10 @@ class Equipment : EquipmentHolder {
             true
         else
             inReserve.add(item)
+
+    override fun decreaseMaxAmount(): EquipmentType? =
+        inReserve.decreaseMaxAmount()
+
 }
 
 abstract class EquipmentList : EquipmentHolder {

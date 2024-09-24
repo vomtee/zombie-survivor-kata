@@ -99,4 +99,16 @@ class EquipmentTest {
         reserve.maxAmount shouldBe 0
 
     }
+
+    @Test
+    fun `equipment should lose one item when max amount is less then amount of items in equipment ` () {
+        equipment.add(BASEBALL_BAT)
+        equipment.add(FRYING_PAN)
+        equipment.add(KATANA)
+        equipment.add(PISTOL)
+        equipment.add(BOTTLED_WATER)
+
+        equipment.decreaseMaxAmount() shouldBe BOTTLED_WATER
+        equipment.maxAmount shouldBe 4
+    }
 }

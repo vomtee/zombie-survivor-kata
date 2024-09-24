@@ -33,4 +33,24 @@ class GameTest {
         game.add(Survivor("Frantz")) shouldBe true
         game.amountOfSurvivors shouldBeEqual 2
     }
+
+    @Test
+    fun `game ends when all survivors have died`() {
+        val hanz = Survivor("Hanz")
+        val frantz = Survivor("Frantz")
+
+        game.add(hanz)
+        game.add(frantz)
+        game.ended shouldBe false
+
+        hanz.wound()
+        hanz.wound()
+        game.amountOfSurvivors shouldBeEqual 1
+
+        frantz.wound()
+        frantz.wound()
+        game.amountOfSurvivors shouldBeEqual 0
+        game.ended shouldBe true
+
+    }
 }

@@ -7,6 +7,9 @@ class Game {
     val amountOfSurvivors
         get() = nameToSurvivor.size
 
+    val ended
+        get() = amountOfSurvivors == 0
+
     fun add(survivor: Survivor) : Boolean = when {
         nameToSurvivor.containsKey(survivor.name) -> {
             false

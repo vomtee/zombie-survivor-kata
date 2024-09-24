@@ -9,7 +9,7 @@ enum class EquipmentType {
     KATANA,
     PISTOL,
     BOTTLED_WATER,
-    MOLOTOV,
+//    MOLOTOV,
 }
 
 interface EquipmentHolder {
@@ -67,9 +67,13 @@ class InReserve : EquipmentList(), ShrinkableEquipmentHolder {
     override var maxAmount: Int = MAX_IN_RESERVE_AMOUNT
 
     override fun decreaseMaxAmount(): EquipmentType? {
-        var result: EquipmentType? = null
+        if (maxAmount == 0) {
+            return null
+        }
 
+        var result: EquipmentType? = null
         val lowerMaxAmount = maxAmount - 1
+
         if (amount > lowerMaxAmount) {
             result = items.removeLast()
         }

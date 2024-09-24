@@ -83,7 +83,7 @@ class EquipmentTest {
     }
 
     @Test
-    fun `decreaseMaxAmount() should not be executed if maxAmount reached 0`() {
+    fun `decreaseMaxAmount() should not be executed if maxAmount is already 0`() {
         val reserve: ShrinkableEquipmentHolder = InReserve()
         reserve.add(BASEBALL_BAT)
         reserve.add(FRYING_PAN)

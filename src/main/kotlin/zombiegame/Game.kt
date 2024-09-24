@@ -7,12 +7,14 @@ class Game {
     val amountOfSurvivors
         get() = nameToSurvivor.size
 
-    fun add(survivor: Survivor) : Boolean {
-        if (nameToSurvivor.containsKey(survivor.name)) {
-            return false
+    fun add(survivor: Survivor) : Boolean = when {
+        nameToSurvivor.containsKey(survivor.name) -> {
+            false
         }
 
-        nameToSurvivor[survivor.name] = survivor
-        return true
+        else -> {
+            nameToSurvivor[survivor.name] = survivor
+            true
+        }
     }
 }

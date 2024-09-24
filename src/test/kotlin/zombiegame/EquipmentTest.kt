@@ -81,4 +81,22 @@ class EquipmentTest {
 
         reserve.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
     }
+
+    @Test
+    fun `decreaseMaxAmount() should not be executed if maxAmount reached 0`() {
+        val reserve: ShrinkableEquipmentHolder = InReserve()
+        reserve.add(BASEBALL_BAT)
+        reserve.add(FRYING_PAN)
+
+        reserve.decreaseMaxAmount() shouldBe null
+        reserve.maxAmount shouldBe 2
+        reserve.decreaseMaxAmount() shouldBe FRYING_PAN
+        reserve.maxAmount shouldBe 1
+        reserve.decreaseMaxAmount() shouldBe BASEBALL_BAT
+        reserve.maxAmount shouldBe 0
+
+        reserve.decreaseMaxAmount() shouldBe null
+        reserve.maxAmount shouldBe 0
+
+    }
 }

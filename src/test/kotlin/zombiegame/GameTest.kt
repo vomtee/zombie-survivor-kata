@@ -26,4 +26,11 @@ class GameTest {
         game.add(Survivor("Hanz")) shouldBe false
         game.amountOfSurvivors shouldBeEqual 1
     }
+
+    @Test
+    fun `can add unique survivors`() {
+        game.add(Survivor("Hanz")) shouldBe true
+        game.add(Survivor("Frantz")) shouldBe true
+        game.amountOfSurvivors shouldBeEqual 2
+    }
 }

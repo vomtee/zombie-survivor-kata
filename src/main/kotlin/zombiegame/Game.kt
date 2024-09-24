@@ -1,0 +1,4 @@
+package zombiegame
+
+class Game {
+}

@@ -9,6 +9,8 @@ class Score {
     fun incrementExperience() {
         experience++
         when {
+            experience > 42 -> level = LevelType.Red
+            experience > 18 -> level = LevelType.Orange
             experience > 6 -> level = LevelType.Yellow
         }
     }
@@ -17,6 +19,6 @@ class Score {
 enum class LevelType {
     Blue,
     Yellow,
-//    Orange,
-//    Red
+    Orange,
+    Red
 }

@@ -11,6 +11,7 @@ import zombiegame.EquipmentType.BOTTLED_WATER
 import zombiegame.EquipmentType.FRYING_PAN
 import zombiegame.EquipmentType.KATANA
 import zombiegame.EquipmentType.PISTOL
+import zombiegame.LevelType.Blue
 
 class SurvivorTest {
     private val survivor: Survivor = Survivor("Local Horst")
@@ -101,4 +102,9 @@ class SurvivorTest {
         equipment.content shouldBe listOf(BASEBALL_BAT, FRYING_PAN, KATANA)
     }
 
+    @Test
+    fun `survivor begins with 0 experience and level blue`() {
+        survivor.experience shouldBe 0
+        survivor.level shouldBe Blue
+    }
 }

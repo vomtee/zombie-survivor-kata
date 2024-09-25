@@ -12,7 +12,7 @@ class ExperienceLevelTest {
     @Test
     fun `more than 6 experience gives level yellow`() {
         repeat(7) {
-            experienceLevel.incremenentExperience()
+            experienceLevel.incrementExperience()
         }
 
         experienceLevel.level shouldBe Yellow

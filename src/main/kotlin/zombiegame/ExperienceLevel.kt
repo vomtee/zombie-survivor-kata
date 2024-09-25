@@ -1,10 +1,16 @@
 package zombiegame
 
 class ExperienceLevel {
-    val experience: Int = 0
-    val level: LevelType = LevelType.Blue
+    var experience: Int = 0
+        private set
+    var level: LevelType = LevelType.Blue
+        private set
 
-    fun incremenentExperience() {
+    fun incrementExperience() {
+        experience++
+        when {
+            experience > 6 -> level = LevelType.Yellow
+        }
     }
 }
 

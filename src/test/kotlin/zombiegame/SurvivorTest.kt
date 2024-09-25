@@ -107,4 +107,23 @@ class SurvivorTest {
         survivor.experience shouldBe 0
         survivor.level shouldBe Blue
     }
+
+    @Test
+    fun `survivor killing a zombie gains 1 experience `() {
+        survivor.killZombie()
+        survivor.experience shouldBe 1
+    }
+
+    @Test
+    fun `dead survivor killing a zombie does not increment experience `() {
+        survivor.killZombie()
+        survivor.experience shouldBe 1
+
+        survivor.wound()
+        survivor.wound()
+        survivor.dead shouldBe true
+
+        survivor.killZombie()
+        survivor.experience shouldBe 1
+    }
 }

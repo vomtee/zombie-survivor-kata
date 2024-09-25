@@ -4,8 +4,8 @@ import zombiegame.Score
 const val MAX_WOUNDS = 2
 const val MAX_ACTIONS = 3
 
-class Survivor(val name: String): SurvivorObservable {
-    val equipment =  Equipment()
+class Survivor(val name: String) : SurvivorObservable {
+    val equipment = Equipment()
     var wounds: Int = 0
         private set
     var dead: Boolean = false
@@ -44,6 +44,14 @@ class Survivor(val name: String): SurvivorObservable {
             dead = true
             observer?.notifyDead(this)
         }
+    }
+
+    fun killZombie() {
+        if (dead) {
+            return
+        }
+
+        score.incrementExperience()
     }
 
     override fun addObserver(observer: SurvivorObserver) {

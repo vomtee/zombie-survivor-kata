@@ -2,6 +2,7 @@ package zombiegame
 
 import Survivor
 import SurvivorObserver
+import zombiegame.LevelType.Blue
 
 class Game: SurvivorObserver {
     private val nameToSurvivor = mutableMapOf<String, Survivor>()
@@ -10,6 +11,9 @@ class Game: SurvivorObserver {
 
     val ended
         get() = amountOfSurvivors == 0
+
+    var level: LevelType = Blue
+        private set
 
     fun add(survivor: Survivor) : Boolean = when {
         nameToSurvivor.containsKey(survivor.name) -> {

@@ -4,6 +4,7 @@ import Survivor
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import zombiegame.LevelType.Blue
 
 
 class GameTest {
@@ -51,6 +52,10 @@ class GameTest {
         frantz.wound()
         game.amountOfSurvivors shouldBeEqual 0
         game.ended shouldBe true
+    }
 
+    @Test
+    fun `game starts with level Blue`() {
+        game.level shouldBe Blue
     }
 }

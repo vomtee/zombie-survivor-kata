@@ -12,6 +12,7 @@ import zombiegame.EquipmentType.FRYING_PAN
 import zombiegame.EquipmentType.KATANA
 import zombiegame.EquipmentType.PISTOL
 import zombiegame.LevelType.Blue
+import zombiegame.LevelType.Yellow
 
 class SurvivorTest {
     private val survivor: Survivor = Survivor("Local Horst")
@@ -125,5 +126,15 @@ class SurvivorTest {
 
         survivor.killZombie()
         survivor.experience shouldBe 1
+    }
+
+    @Test
+    fun `survivor killing 7 zombies levels up `() {
+        survivor.level shouldBe  Blue
+        repeat(7) {
+            survivor.killZombie()
+        }
+
+        survivor.level shouldBe Yellow
     }
 }

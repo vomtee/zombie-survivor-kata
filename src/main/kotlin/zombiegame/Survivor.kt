@@ -1,5 +1,5 @@
 import zombiegame.Equipment
-import zombiegame.ExperienceLevel
+import zombiegame.Score
 
 const val MAX_WOUNDS = 2
 const val MAX_ACTIONS = 3
@@ -13,11 +13,11 @@ class Survivor(val name: String): SurvivorObservable {
     private var actionCount: Int = 0
     private var observer: SurvivorObserver? = null
 
-    private val experienceLevel = ExperienceLevel()
+    private val score = Score()
     val experience
-        get() = experienceLevel.experience
+        get() = score.experience
     val level
-        get() = experienceLevel.level
+        get() = score.level
 
     fun act(): Boolean {
         if (actionCount >= MAX_ACTIONS) {

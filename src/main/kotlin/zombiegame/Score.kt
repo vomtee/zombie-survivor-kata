@@ -1,6 +1,6 @@
 package zombiegame
 
-class ExperienceLevel {
+class Score {
     var experience: Int = 0
         private set
     var level: LevelType = LevelType.Blue

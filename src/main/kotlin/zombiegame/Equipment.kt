@@ -16,16 +16,12 @@ interface EquipmentHolder {
     val amount: Int
     val maxAmount: Int
     val content: List<EquipmentType>
-    fun addItemOperation(item: EquipmentType): Boolean
+    fun add(item: EquipmentType): Boolean
 }
 
 interface ShrinkableEquipmentHolder : EquipmentHolder {
     fun decreaseMaxAmount(): EquipmentType?
 }
-
-// TODO how to enforce the condition in the interface without exposing addItemOperation() and forcing to use add() instead ?
-fun EquipmentHolder.add(item: EquipmentType): Boolean =
-    if (amount < maxAmount) addItemOperation(item) else false
 
 class Equipment : ShrinkableEquipmentHolder {
     val inHands: EquipmentHolder = InHands()
@@ -40,7 +36,7 @@ class Equipment : ShrinkableEquipmentHolder {
     override val content: List<EquipmentType>
         get() = inHands.content + inReserve.content
 
-    override fun addItemOperation(item: EquipmentType): Boolean =
+    override fun add(item: EquipmentType): Boolean =
         if (inHands.add(item))
             true
         else
@@ -60,8 +56,8 @@ abstract class EquipmentList : EquipmentHolder {
     override val content: List<EquipmentType>
         get() = items.toList()
 
-    override fun addItemOperation(item: EquipmentType): Boolean =
-        items.add(item)
+    override fun add(item: EquipmentType): Boolean =
+        if (amount < maxAmount) items.add(item) else false
 }
 
 class InHands : EquipmentList() {

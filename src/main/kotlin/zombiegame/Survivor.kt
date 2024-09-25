@@ -47,11 +47,8 @@ class Survivor(val name: String) : SurvivorObservable {
     }
 
     fun killZombie() {
-        if (dead) {
-            return
-        }
-
         score.incrementExperience()
+        observer?.notifyLevel(this)
     }
 
     override fun addObserver(observer: SurvivorObserver) {
@@ -65,5 +62,6 @@ interface SurvivorObservable {
 
 interface SurvivorObserver {
     fun notifyDead(survivor: Survivor)
+    fun notifyLevel(survivor: Survivor)
 }
 

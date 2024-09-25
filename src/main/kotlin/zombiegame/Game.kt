@@ -4,7 +4,7 @@ import Survivor
 import SurvivorObserver
 import zombiegame.LevelType.Blue
 
-class Game: SurvivorObserver {
+class Game : SurvivorObserver {
     private val nameToSurvivor = mutableMapOf<String, Survivor>()
     val amountOfSurvivors
         get() = nameToSurvivor.size
@@ -15,7 +15,7 @@ class Game: SurvivorObserver {
     var level: LevelType = Blue
         private set
 
-    fun add(survivor: Survivor) : Boolean = when {
+    fun add(survivor: Survivor): Boolean = when {
         nameToSurvivor.containsKey(survivor.name) -> {
             false
         }
@@ -29,6 +29,16 @@ class Game: SurvivorObserver {
 
     override fun notifyDead(survivor: Survivor) {
         nameToSurvivor.remove(survivor.name)
+    }
+
+    override fun notifyLevel(survivor: Survivor) {
+        if (survivor.dead) {
+            return
+        }
+
+        if (survivor.level > level) {
+            level = survivor.level
+        }
     }
 }
 

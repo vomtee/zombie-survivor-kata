@@ -23,6 +23,7 @@ interface ShrinkableEquipmentHolder : EquipmentHolder {
     fun decreaseMaxAmount(): EquipmentType?
 }
 
+// TODO how to enforce the condition in the interface without exposing addItemOperation() and forcing to use add() instead ?
 fun EquipmentHolder.add(item: EquipmentType): Boolean =
     if (amount < maxAmount) addItemOperation(item) else false
 

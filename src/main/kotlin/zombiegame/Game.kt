@@ -4,7 +4,9 @@ import Survivor
 import SurvivorObserver
 import zombiegame.LevelType.Blue
 
-class Game : SurvivorObserver {
+class Game : SurvivorObserver, GameObservable {
+    private var observer: GameObserver? = null
+
     private val nameToSurvivor = mutableMapOf<String, Survivor>()
     val amountOfSurvivors
         get() = nameToSurvivor.size
@@ -23,6 +25,11 @@ class Game : SurvivorObserver {
         else -> {
             nameToSurvivor[survivor.name] = survivor
             survivor.addObserver(this)
+
+            if (amountOfSurvivors == 1) {
+                observer?.notifyGameStart()
+            }
+
             true
         }
     }
@@ -40,5 +47,17 @@ class Game : SurvivorObserver {
             level = survivor.level
         }
     }
+
+    override fun addObserver(observer: GameObserver) {
+        this.observer = observer
+    }
+}
+
+interface GameObservable {
+    fun addObserver(observer: GameObserver)
+}
+
+interface GameObserver {
+    fun notifyGameStart()
 }
 

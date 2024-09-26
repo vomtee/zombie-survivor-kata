@@ -4,6 +4,7 @@ import java.time.Clock
 import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.ChronoField.HOUR_OF_DAY
 import java.time.temporal.ChronoField.MINUTE_OF_HOUR
@@ -16,8 +17,8 @@ const val ZONE_ID = "UTC"
 
 class TimeUtils {
     companion object {
-        val FIXED_CLOCK = Clock.fixed(Instant.parse(FIXED_TIME), ZoneId.of(ZONE_ID))
-        val SHORT_LOCAL_TIME_FORMAT = DateTimeFormatterBuilder()
+        val FIXED_CLOCK: Clock = Clock.fixed(Instant.parse(FIXED_TIME), ZoneId.of(ZONE_ID))
+        val SHORT_LOCAL_TIME_FORMAT: DateTimeFormatter = DateTimeFormatterBuilder()
             .appendValue(HOUR_OF_DAY, 2)
             .appendLiteral(':')
             .appendValue(MINUTE_OF_HOUR, 2)

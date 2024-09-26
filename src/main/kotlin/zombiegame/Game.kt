@@ -30,6 +30,8 @@ class Game : SurvivorObserver, GameObservable {
                 observer?.notifyGameStart()
             }
 
+            observer?.notifySurvivorAdded(survivor)
+
             true
         }
     }
@@ -59,5 +61,6 @@ interface GameObservable {
 
 interface GameObserver {
     fun notifyGameStart()
+    fun notifySurvivorAdded(survivor: Survivor)
 }
 

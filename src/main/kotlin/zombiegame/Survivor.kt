@@ -40,6 +40,7 @@ class Survivor(val name: String) : SurvivorObservable {
 
         wounds++
         equipment.decreaseMaxAmount()
+        observers.forEach { it.notifyWound(this) }
 
         if (wounds >= MAX_WOUNDS) {
             dead = true
@@ -71,5 +72,6 @@ interface SurvivorObserver {
     fun notifyDead(survivor: Survivor)
     fun notifyLevel(survivor: Survivor)
     fun notifyAddEquipment(survivor: Survivor, item: EquipmentType)
+    fun notifyWound(survivor: Survivor)
 }
 

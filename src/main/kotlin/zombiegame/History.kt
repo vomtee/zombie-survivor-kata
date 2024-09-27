@@ -35,6 +35,10 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     override fun notifyAddEquipment(survivor: Survivor, item: EquipmentType) {
         mutableList.add("""Survivor "${survivor.name}" has added "${item}" to its equipment.""")
     }
+
+    override fun notifyWound(survivor: Survivor) {
+        mutableList.add("""Survivor "${survivor.name}" has been wounded.""")
+    }
 }
 
 

@@ -25,11 +25,22 @@ class HistoryTest {
     }
 
     @Test
-    fun `history records that a survivor has added an item to his euiqpment`() {
+    fun `history records that a survivor has added an item to his equipment`()
+    {
         val hantz = Survivor("Hantz")
         game.add(hantz)
         hantz.addEquipment(KATANA)
 
         history.list[2] shouldBe """Survivor "Hantz" has added "KATANA" to its equipment."""
+    }
+
+    @Test
+    fun `history records that a survivor has been wounded`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+        hantz.wound()
+
+        history.list[2] shouldBe """Survivor "Hantz" has been wounded."""
     }
 }

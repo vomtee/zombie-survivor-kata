@@ -25,7 +25,7 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     }
 
     override fun notifyDead(survivor: Survivor) {
-        TODO("Not yet implemented")
+        mutableList.add("""Survivor "${survivor.name}" has died.""")
     }
 
     override fun notifyLevel(survivor: Survivor) {

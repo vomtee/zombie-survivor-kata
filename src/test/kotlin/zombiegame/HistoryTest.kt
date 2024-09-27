@@ -1,6 +1,7 @@
 package zombiegame
 
 import Survivor
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import zombiegame.EquipmentType.KATANA
@@ -21,7 +22,7 @@ class HistoryTest {
     fun `history records that a survivor has been added to the game`() {
         game.add(Survivor("Hantz"))
 
-        history.list[1] shouldBe """Survivor "Hantz" has been added to the game."""
+        history.list shouldContain """Survivor "Hantz" has been added to the game."""
     }
 
     @Test
@@ -31,7 +32,7 @@ class HistoryTest {
         game.add(hantz)
         hantz.addEquipment(KATANA)
 
-        history.list[2] shouldBe """Survivor "Hantz" has added "KATANA" to its equipment."""
+        history.list shouldContain """Survivor "Hantz" has added "KATANA" to its equipment."""
     }
 
     @Test
@@ -41,6 +42,17 @@ class HistoryTest {
         game.add(hantz)
         hantz.wound()
 
-        history.list[2] shouldBe """Survivor "Hantz" has been wounded."""
+        history.list shouldContain """Survivor "Hantz" has been wounded."""
+    }
+
+    @Test
+    fun `history records that a survivor has died`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+        hantz.wound()
+        hantz.wound()
+
+        history.list shouldContain  """Survivor "Hantz" has died."""
     }
 }

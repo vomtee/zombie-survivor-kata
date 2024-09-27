@@ -38,6 +38,9 @@ class Game : SurvivorObserver, GameObservable {
 
     override fun notifyDead(survivor: Survivor) {
         nameToSurvivor.remove(survivor.name)
+        if (ended) {
+            observer?.notifyGameEnd()
+        }
     }
 
     override fun notifyLevel(survivor: Survivor) {
@@ -66,6 +69,7 @@ interface GameObservable {
 
 interface GameObserver {
     fun notifyGameStart()
+    fun notifyGameEnd()
     fun notifySurvivorAdded(survivor: Survivor)
     fun notifyLevelUp(level: LevelType)
 }

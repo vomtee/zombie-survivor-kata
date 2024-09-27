@@ -15,7 +15,7 @@ class HistoryTest {
     fun `history records beginning of game`() {
         game.add(Survivor("Hantz"))
 
-        history.list[0] shouldBe "Game started at 12:34."
+        history.list.first() shouldBe "Game started at 12:34."
     }
 
     @Test
@@ -79,5 +79,17 @@ class HistoryTest {
         }
 
         history.list shouldContain  """Game has levelled up to "Yellow"."""
+    }
+
+    @Test
+    fun `history records that game has ended`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+
+        hantz.wound()
+        hantz.wound()
+
+        history.list.last() shouldBe  """Game has ended."""
     }
 }

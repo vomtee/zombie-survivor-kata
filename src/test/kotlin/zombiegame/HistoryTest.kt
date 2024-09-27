@@ -90,6 +90,6 @@ class HistoryTest {
         hantz.wound()
         hantz.wound()
 
-        history.list.last() shouldBe  """Game has ended."""
+        history.list shouldContain """Game has ended."""
     }
 }

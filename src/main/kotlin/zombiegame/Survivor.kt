@@ -1,4 +1,5 @@
 import zombiegame.Equipment
+import zombiegame.EquipmentType
 import zombiegame.Score
 
 const val MAX_WOUNDS = 2
@@ -53,6 +54,10 @@ class Survivor(val name: String) : SurvivorObservable {
 
     override fun addObserver(observer: SurvivorObserver) {
         this.observer = observer
+    }
+
+    fun add(item: EquipmentType) {
+
     }
 }
 

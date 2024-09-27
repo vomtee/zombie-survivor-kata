@@ -46,13 +46,38 @@ class HistoryTest {
     }
 
     @Test
-    fun `history records that a survivor has died`()
-    {
+    fun `history records that a survivor has died`() {
         val hantz = Survivor("Hantz")
         game.add(hantz)
         hantz.wound()
         hantz.wound()
 
-        history.list shouldContain  """Survivor "Hantz" has died."""
+        history.list shouldContain """Survivor "Hantz" has died."""
+    }
+
+    @Test
+    fun `history records that a survivor has levelled up`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+
+        repeat(7) {
+            hantz.killZombie()
+        }
+
+        history.list shouldContain  """Survivor "Hantz" has levelled up to "Yellow"."""
+    }
+
+    @Test
+    fun `history records that game has levelled up`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+
+        repeat(7) {
+            hantz.killZombie()
+        }
+
+        history.list shouldContain  """Game has levelled up to "Yellow"."""
     }
 }

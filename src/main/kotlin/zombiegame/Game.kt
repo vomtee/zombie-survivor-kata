@@ -47,11 +47,13 @@ class Game : SurvivorObserver, GameObservable {
 
         if (survivor.level > level) {
             level = survivor.level
+            observer?.notifyLevelUp(level)
         }
     }
 
     override fun notifyAddEquipment(survivor: Survivor, item: EquipmentType) {}
     override fun notifyWound(survivor: Survivor) {}
+    override fun notifyLevelChange(survivor: Survivor, level: LevelType) {}
 
     override fun addObserver(observer: GameObserver) {
         this.observer = observer
@@ -65,5 +67,6 @@ interface GameObservable {
 interface GameObserver {
     fun notifyGameStart()
     fun notifySurvivorAdded(survivor: Survivor)
+    fun notifyLevelUp(level: LevelType)
 }
 

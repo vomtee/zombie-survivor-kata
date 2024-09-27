@@ -1,5 +1,6 @@
 import zombiegame.Equipment
 import zombiegame.EquipmentType
+import zombiegame.LevelType
 import zombiegame.Score
 
 const val MAX_WOUNDS = 2
@@ -51,6 +52,10 @@ class Survivor(val name: String) : SurvivorObservable {
     fun killZombie() {
         score.incrementExperience()
         observers.forEach { it.notifyLevel(this) }
+
+        if(score.levelHasGoneUp()) {
+            observers.forEach { it.notifyLevelChange(this, level) }
+        }
     }
 
     override fun addObserver(observer: SurvivorObserver) {
@@ -73,5 +78,6 @@ interface SurvivorObserver {
     fun notifyLevel(survivor: Survivor)
     fun notifyAddEquipment(survivor: Survivor, item: EquipmentType)
     fun notifyWound(survivor: Survivor)
+    fun notifyLevelChange(survivor: Survivor, level: LevelType)
 }
 

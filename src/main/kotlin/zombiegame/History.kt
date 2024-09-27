@@ -24,13 +24,15 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
         survivor.addObserver(this)
     }
 
+    override fun notifyLevelUp(level: LevelType) {
+        mutableList.add("""Game has levelled up to "${level}".""")
+    }
+
     override fun notifyDead(survivor: Survivor) {
         mutableList.add("""Survivor "${survivor.name}" has died.""")
     }
 
-    override fun notifyLevel(survivor: Survivor) {
-        TODO("Not yet implemented")
-    }
+    override fun notifyLevel(survivor: Survivor) {}
 
     override fun notifyAddEquipment(survivor: Survivor, item: EquipmentType) {
         mutableList.add("""Survivor "${survivor.name}" has added "${item}" to its equipment.""")
@@ -38,6 +40,10 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
 
     override fun notifyWound(survivor: Survivor) {
         mutableList.add("""Survivor "${survivor.name}" has been wounded.""")
+    }
+
+    override fun notifyLevelChange(survivor: Survivor, level: LevelType) {
+        mutableList.add("""Survivor "${survivor.name}" has levelled up to "${level}".""")
     }
 }
 

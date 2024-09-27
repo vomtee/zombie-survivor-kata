@@ -56,8 +56,10 @@ class Survivor(val name: String) : SurvivorObservable {
         observers.add(observer)
     }
 
-    fun add(item: EquipmentType): Boolean {
-        return equipment.add(item)
+    fun addEquipment(item: EquipmentType): Boolean {
+        val result = equipment.add(item)
+        observers.forEach { it.notifyAddEquipment(this, item) }
+        return result
     }
 }
 
@@ -68,6 +70,6 @@ interface SurvivorObservable {
 interface SurvivorObserver {
     fun notifyDead(survivor: Survivor)
     fun notifyLevel(survivor: Survivor)
-    fun notifyAddEquipment(survivor: Survivor, equipment: Equipment)
+    fun notifyAddEquipment(survivor: Survivor, item: EquipmentType)
 }
 

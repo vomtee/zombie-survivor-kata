@@ -12,7 +12,7 @@ class Survivor(val name: String) : SurvivorObservable {
     var dead: Boolean = false
         private set
     private var actionCount: Int = 0
-    private var observer: SurvivorObserver? = null
+    private var observers = mutableListOf<SurvivorObserver>()
 
     private val score = Score()
     val experience
@@ -43,21 +43,21 @@ class Survivor(val name: String) : SurvivorObservable {
 
         if (wounds >= MAX_WOUNDS) {
             dead = true
-            observer?.notifyDead(this)
+            observers.forEach { it.notifyDead(this) }
         }
     }
 
     fun killZombie() {
         score.incrementExperience()
-        observer?.notifyLevel(this)
+        observers.forEach { it.notifyLevel(this) }
     }
 
     override fun addObserver(observer: SurvivorObserver) {
-        this.observer = observer
+        observers.add(observer)
     }
 
-    fun add(item: EquipmentType) {
-
+    fun add(item: EquipmentType): Boolean {
+        return equipment.add(item)
     }
 }
 
@@ -68,5 +68,6 @@ interface SurvivorObservable {
 interface SurvivorObserver {
     fun notifyDead(survivor: Survivor)
     fun notifyLevel(survivor: Survivor)
+    fun notifyAddEquipment(survivor: Survivor, equipment: Equipment)
 }
 

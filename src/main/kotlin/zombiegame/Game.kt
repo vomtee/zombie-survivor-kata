@@ -50,6 +50,8 @@ class Game : SurvivorObserver, GameObservable {
         }
     }
 
+    override fun notifyAddEquipment(survivor: Survivor, equipment: Equipment) {}
+
     override fun addObserver(observer: GameObserver) {
         this.observer = observer
     }

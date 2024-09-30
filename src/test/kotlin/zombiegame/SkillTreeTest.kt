@@ -20,9 +20,9 @@ class SkillTreeTest {
 
     @Test
     fun `skill tree has two skills at level orange`() {
-        skillTree[Orange]?.let {
+        skillTree[Orange]?.let { it ->
             it.size shouldBe 2
-            it.filter { !it.locked } shouldBe emptyList()
+            it.filter { skillType -> !skillType.locked } shouldBe emptyList()
         }
     }
 
@@ -30,7 +30,7 @@ class SkillTreeTest {
     fun `skill tree has three skills at level red`() {
         skillTree[Red]?.let {
             it.size shouldBe 3
-            it.filter { !it.locked } shouldBe emptyList()
+            it.filter { skillType -> !skillType.locked } shouldBe emptyList()
         }
     }
 }

@@ -1,6 +1,7 @@
 package zombiegame
 
 import io.kotest.matchers.comparables.shouldBeGreaterThan
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import zombiegame.LevelType.Blue
@@ -23,6 +24,7 @@ class ScoreTest {
             score.incrementExperience()
         }
 
+        score.experience shouldBeEqual 7
         score.level shouldBeGreaterThan score.previousLevel
         score.levelHasGoneUp() shouldBe true
         score.level shouldBe Yellow

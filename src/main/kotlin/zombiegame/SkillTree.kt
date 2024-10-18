@@ -20,6 +20,8 @@ class SkillTree(levelToSkills: MutableMap<LevelType, SkillList> = mutableMapOf()
         levelToSkills[Orange] = listOf(PLUS_ONE_DIE_RANGED, PLUS_ONE_DIE_MELEE)
         levelToSkills[Red] = listOf(PLUS_ONE_FREE_MOVE, HOARD, SNIPER)
     }
+
+
 }
 
 enum class SkillType(description: String) {

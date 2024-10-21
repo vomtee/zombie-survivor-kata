@@ -8,9 +8,10 @@ import zombiegame.LevelType.Blue
 import zombiegame.LevelType.Orange
 import zombiegame.LevelType.Red
 import zombiegame.LevelType.Yellow
+import zombiegame.Score.Companion.levelAndSkill
 
 class ScoreTest {
-    val score = Score()
+    private val score = Score()
 
     @Test
     fun `previous and current level are initially the same`() {
@@ -53,4 +54,37 @@ class ScoreTest {
         }
         score.level shouldBe Red
     }
+
+    @Test
+    fun `testing levels for skill 1 experience`() {
+        levelAndSkill(Blue.experience) shouldBe Pair(Blue, 1)
+        levelAndSkill(Yellow.experience) shouldBe Pair(Yellow, 1)
+        levelAndSkill(Orange.experience) shouldBe Pair(Orange, 1)
+        levelAndSkill(Red.experience) shouldBe Pair(Red, 1)
+    }
+
+    @Test
+    fun `testing levels for skill 2 experience`() {
+        levelAndSkill(Red.experience + Blue.experience + 1) shouldBe Pair(Blue, 2)
+        levelAndSkill(Red.experience + Yellow.experience) shouldBe Pair(Yellow, 2)
+        levelAndSkill(Red.experience + Orange.experience) shouldBe Pair(Orange, 2)
+        levelAndSkill(2 * Red.experience) shouldBe Pair(Red, 2)
+    }
+
+    @Test
+    fun `testing levels for skill 3 experience`() {
+        levelAndSkill(2 * Red.experience + Blue.experience + 2) shouldBe Pair(Blue, 3)
+        levelAndSkill(2 * Red.experience + Yellow.experience) shouldBe Pair(Yellow, 3)
+        levelAndSkill(2 * Red.experience + Orange.experience) shouldBe Pair(Orange, 3)
+        levelAndSkill(3 * Red.experience) shouldBe Pair(Red, 3)
+    }
+
+    @Test
+    fun `testing levels for skill 4 experience`() {
+        levelAndSkill(3 * Red.experience + Blue.experience + 3) shouldBe Pair(Blue, 4)
+        levelAndSkill(3 * Red.experience + Yellow.experience) shouldBe Pair(Yellow, 4)
+        levelAndSkill(3 * Red.experience + Orange.experience) shouldBe Pair(Orange, 4)
+        levelAndSkill(4 * Red.experience) shouldBe Pair(Red, 4)
+    }
+
 }

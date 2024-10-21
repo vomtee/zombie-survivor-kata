@@ -16,11 +16,7 @@ class Score {
     fun incrementExperience() {
         val oldLevel = level
         experience++
-        when {
-            experience >= Red.experience -> level = Red
-            experience >= Orange.experience -> level = Orange
-            experience >= Yellow.experience -> level = Yellow
-        }
+        level = getLevel(experience)
 
         if (level > oldLevel) {
             previousLevel = oldLevel
@@ -28,6 +24,24 @@ class Score {
     }
 
     fun levelHasGoneUp() : Boolean = level > previousLevel
+
+    companion object {
+        fun getLevel(experience: Int): LevelType = when {
+            experience >= Red.experience -> Red
+            experience >= Orange.experience -> Orange
+            experience >= Yellow.experience -> Yellow
+            else -> Blue
+        }
+
+        fun levelAndSkill(experience: Int): Pair<LevelType, Int> {
+            val skill = (experience / (Red.experience + 1)) + 1
+
+            val experienceWithoutSkill = experience - (skill - 1) * Red.experience
+            val level = getLevel(experienceWithoutSkill)
+
+            return Pair(level, skill)
+        }
+    }
 }
 
 enum class LevelType(val experience: Int) {

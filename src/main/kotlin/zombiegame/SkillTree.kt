@@ -1,5 +1,6 @@
 package zombiegame
 
+import kotlin.math.min
 import zombiegame.LevelType.Orange
 import zombiegame.LevelType.Red
 import zombiegame.LevelType.Yellow
@@ -21,7 +22,14 @@ class SkillTree(levelToSkills: MutableMap<LevelType, SkillList> = mutableMapOf()
         levelToSkills[Red] = listOf(PLUS_ONE_FREE_MOVE, HOARD, SNIPER)
     }
 
+    fun unlockedSkills(level: LevelType, skillLevel: Int): List<SkillType> {
+        if (!this.contains(level)) {
+            return emptyList()
+        }
 
+        val skills: List<SkillType> = this[level]!!
+        return skills.take(min(skills.size, skillLevel))
+    }
 }
 
 enum class SkillType(description: String) {
@@ -32,11 +40,4 @@ enum class SkillType(description: String) {
     HOARD("Hoard"),
     SNIPER("Sniper");
 //    TOUGH("Tough");
-
-    var locked: Boolean = true
-        private set
-
-    fun unlock() {
-        locked = false
-    }
 }

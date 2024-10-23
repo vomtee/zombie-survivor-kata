@@ -11,23 +11,19 @@ import zombiegame.SkillType.PLUS_ONE_DIE_RANGED
 import zombiegame.SkillType.PLUS_ONE_FREE_MOVE
 import zombiegame.SkillType.SNIPER
 
-typealias SkillList = List<SkillType>
-
-class SkillTree(levelToSkills: MutableMap<LevelType, SkillList> = mutableMapOf()) :
-    Map<LevelType, SkillList> by levelToSkills {
-
-    init {
-        levelToSkills[Yellow] = listOf(PLUS_ONE_ACTION)
-        levelToSkills[Orange] = listOf(PLUS_ONE_DIE_RANGED, PLUS_ONE_DIE_MELEE)
-        levelToSkills[Red] = listOf(PLUS_ONE_FREE_MOVE, HOARD, SNIPER)
-    }
+class SkillTree {
+    private val levelToSkills = mapOf(
+        Yellow to listOf(PLUS_ONE_ACTION),
+        Orange to listOf(PLUS_ONE_DIE_RANGED, PLUS_ONE_DIE_MELEE),
+        Red to listOf(PLUS_ONE_FREE_MOVE, HOARD, SNIPER)
+    )
 
     fun unlockedSkills(level: LevelType, skillLevel: Int): List<SkillType> {
-        if (!this.contains(level)) {
+        if (!levelToSkills.contains(level)) {
             return emptyList()
         }
 
-        val skills: List<SkillType> = this[level]!!
+        val skills: List<SkillType> = levelToSkills[level]!!
         return skills.take(min(skills.size, skillLevel))
     }
 }

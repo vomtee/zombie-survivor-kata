@@ -11,32 +11,17 @@ class SkillTreeTest {
     private val skillTree = SkillTree()
 
     @Test
-    fun `skill tree has 1 skills at level yellow`() {
-        skillTree[Yellow]?.size shouldBe 1
-    }
-
-    @Test
-    fun `skill tree has 2 skills at level orange`() {
-        skillTree[Orange]?.size shouldBe 2
-    }
-
-    @Test
-    fun `skill tree has 3 skills at level red`() {
-        skillTree[Red]?.size shouldBe 3
-    }
-
-    @Test
     fun `there are no unlocked skills for level blue`() {
         skillTree.unlockedSkills(Blue, 0) shouldBe emptyList()
     }
 
     @Test
     fun `there are no unlocked skills for level blue with any skill`() {
-        skillTree.unlockedSkills(Blue, 1) shouldBe emptyList()
+        skillTree.unlockedSkills(Blue, 1000) shouldBe emptyList()
     }
 
     @Test
-    fun `there is an unlocked skill for level yellow with skill 1`() {
+    fun `there is 1 unlocked skill for level yellow with skill 1`() {
         skillTree.unlockedSkills(Yellow, 1).size shouldBe 1
     }
 
@@ -46,7 +31,7 @@ class SkillTreeTest {
     }
 
     @Test
-    fun `there is an unlocked skill for level orange with skill 1`() {
+    fun `there is 1 unlocked skill for level orange with skill 1`() {
         skillTree.unlockedSkills(Orange, 1).size shouldBe 1
     }
 

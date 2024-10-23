@@ -18,13 +18,22 @@ class SkillTree {
         Red to listOf(PLUS_ONE_FREE_MOVE, HOARD, SNIPER)
     )
 
-    fun unlockedSkills(level: LevelType, skillLevel: Int): List<SkillType> {
+    fun getSkillsFor(level: LevelType, skillLevel: Int): List<SkillType> {
         if (!levelToSkills.contains(level)) {
             return emptyList()
         }
 
         val skills: List<SkillType> = levelToSkills[level]!!
         return skills.take(min(skills.size, skillLevel))
+    }
+
+    fun getAllSkillsUpTo(level: LevelType, skillLevel: Int): Set<SkillType> {
+        val skills = mutableSetOf<SkillType>()
+        for (l in LevelType.entries.filter { it in Yellow..level }) {
+            skills += getSkillsFor(l, skillLevel)
+        }
+
+        return skills
     }
 }
 

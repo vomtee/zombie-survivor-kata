@@ -13,6 +13,7 @@ import zombiegame.EquipmentType.KATANA
 import zombiegame.EquipmentType.PISTOL
 import zombiegame.LevelType.Blue
 import zombiegame.LevelType.Yellow
+import zombiegame.SkillType.PLUS_ONE_ACTION
 
 class SurvivorTest {
     private val survivor: Survivor = Survivor("Local Horst")
@@ -72,6 +73,21 @@ class SurvivorTest {
         }
 
         survivor.act() shouldBe false
+    }
+
+    @Test
+    fun `survivor with skill 'plus one action' can perform 4 actions`() {
+        repeat(7) {
+            survivor.killZombie()
+        }
+
+        survivor.skills.contains(PLUS_ONE_ACTION) shouldBe true
+
+        repeat(3) {
+            survivor.act()
+        }
+
+        survivor.act() shouldBe true
     }
 
     @Test

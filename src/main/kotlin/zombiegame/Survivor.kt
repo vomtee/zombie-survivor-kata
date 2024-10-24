@@ -2,9 +2,13 @@ import zombiegame.Equipment
 import zombiegame.EquipmentType
 import zombiegame.LevelType
 import zombiegame.Score
+import zombiegame.SkillTree
+import zombiegame.SkillType
+import zombiegame.SkillType.PLUS_ONE_ACTION
 
 const val MAX_WOUNDS = 2
-const val MAX_ACTIONS = 3
+const val STANDARD_MAX_ACTIONS = 3
+const val UPGRADED_MAX_ACTIONS = 4
 
 class Survivor(val name: String) : SurvivorObservable {
     val equipment = Equipment()
@@ -12,8 +16,13 @@ class Survivor(val name: String) : SurvivorObservable {
         private set
     var dead: Boolean = false
         private set
-    private var actionCount: Int = 0
+    private var actionCount = 0
+    private var maxActionCount = STANDARD_MAX_ACTIONS
     private var observers = mutableListOf<SurvivorObserver>()
+
+    private val skillTree = SkillTree()
+    val skills: Set<SkillType>
+        get() = skillTree.getAllSkillsUpTo(score.level, score.experience)
 
     private val score = Score()
     val experience
@@ -22,7 +31,7 @@ class Survivor(val name: String) : SurvivorObservable {
         get() = score.level
 
     fun act(): Boolean {
-        if (actionCount >= MAX_ACTIONS) {
+        if (actionCount >= maxActionCount) {
             return false
         }
 
@@ -51,6 +60,10 @@ class Survivor(val name: String) : SurvivorObservable {
 
     fun killZombie() {
         score.incrementExperience()
+        if(skills.contains(PLUS_ONE_ACTION)) {
+            maxActionCount = UPGRADED_MAX_ACTIONS
+        }
+
         observers.forEach { it.notifyLevel(this) }
 
         if(score.levelHasGoneUp()) {

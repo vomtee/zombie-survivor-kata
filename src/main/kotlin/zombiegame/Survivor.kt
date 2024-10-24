@@ -12,9 +12,9 @@ const val UPGRADED_MAX_ACTIONS = 4
 
 class Survivor(val name: String) : SurvivorObservable {
     val equipment = Equipment()
-    var wounds: Int = 0
+    var wounds = 0
         private set
-    var dead: Boolean = false
+    var dead = false
         private set
     private var actionCount = 0
     private var maxActionCount = STANDARD_MAX_ACTIONS
@@ -60,13 +60,13 @@ class Survivor(val name: String) : SurvivorObservable {
 
     fun killZombie() {
         score.incrementExperience()
-        if(skills.contains(PLUS_ONE_ACTION)) {
+        if (skills.contains(PLUS_ONE_ACTION)) {
             maxActionCount = UPGRADED_MAX_ACTIONS
         }
 
         observers.forEach { it.notifyLevel(this) }
 
-        if(score.levelHasGoneUp()) {
+        if (score.levelHasGoneUp()) {
             observers.forEach { it.notifyLevelChange(this, level) }
         }
     }

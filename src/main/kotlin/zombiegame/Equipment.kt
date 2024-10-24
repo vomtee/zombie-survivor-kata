@@ -1,7 +1,8 @@
 package zombiegame
 
 private const val MAX_IN_HAND_AMOUNT = 2
-private const val MAX_IN_RESERVE_AMOUNT = 3
+private const val STANDARD_MAX_IN_RESERVE_AMOUNT = 3
+private const val UPGRADED_MAX_IN_RESERVE_AMOUNT = 4
 
 enum class EquipmentType {
     BASEBALL_BAT,
@@ -19,13 +20,14 @@ interface EquipmentHolder {
     fun add(item: EquipmentType): Boolean
 }
 
-interface ShrinkableEquipmentHolder : EquipmentHolder {
+interface SizableEquipmentHolder : EquipmentHolder {
     fun decreaseMaxAmount(): EquipmentType?
+    fun upgradeMaxAmount()
 }
 
-class Equipment : ShrinkableEquipmentHolder {
+class Equipment : SizableEquipmentHolder {
     val inHands: EquipmentHolder = InHands()
-    val inReserve: ShrinkableEquipmentHolder = InReserve()
+    val inReserve: SizableEquipmentHolder = InReserve()
 
     override val amount: Int
         get() = this.inHands.amount + this.inReserve.amount
@@ -44,6 +46,9 @@ class Equipment : ShrinkableEquipmentHolder {
 
     override fun decreaseMaxAmount(): EquipmentType? =
         inReserve.decreaseMaxAmount()
+
+    override fun upgradeMaxAmount() =
+        inReserve.upgradeMaxAmount()
 
 }
 
@@ -64,8 +69,8 @@ class InHands : EquipmentList() {
     override val maxAmount: Int = MAX_IN_HAND_AMOUNT
 }
 
-class InReserve : EquipmentList(), ShrinkableEquipmentHolder {
-    override var maxAmount: Int = MAX_IN_RESERVE_AMOUNT
+class InReserve : EquipmentList(), SizableEquipmentHolder {
+    override var maxAmount: Int = STANDARD_MAX_IN_RESERVE_AMOUNT
 
     override fun decreaseMaxAmount(): EquipmentType? {
         if (maxAmount == 0) {
@@ -82,5 +87,11 @@ class InReserve : EquipmentList(), ShrinkableEquipmentHolder {
         maxAmount = lowerMaxAmount
         return result
     }
+
+    override fun upgradeMaxAmount() {
+        maxAmount = UPGRADED_MAX_IN_RESERVE_AMOUNT
+    }
+
+
 }
 

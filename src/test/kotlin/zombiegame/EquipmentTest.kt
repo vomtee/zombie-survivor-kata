@@ -11,14 +11,14 @@ import zombiegame.EquipmentType.PISTOL
 
 class EquipmentTest {
     val equipment = Equipment()
-    
+
     @Test
-    fun `equipment initially is empty nothing` () {
+    fun `equipment initially is empty nothing`() {
         equipment.amount shouldBe 0
     }
 
     @Test
-    fun `equipment can hold 5 items` () {
+    fun `equipment can hold 5 items`() {
         repeat(5) {
             equipment.add(BASEBALL_BAT)
         }
@@ -27,7 +27,7 @@ class EquipmentTest {
     }
 
     @Test
-    fun `equipment can hold not more than 5 items` () {
+    fun `equipment can hold not more than 5 items`() {
         repeat(6) {
             equipment.add(BASEBALL_BAT)
         }
@@ -36,7 +36,18 @@ class EquipmentTest {
     }
 
     @Test
-    fun `equipment holds 2 items in hand and 3 items in reserve` () {
+    fun `upgraded equipment can hold 6 items` () {
+        equipment.upgradeMaxAmount()
+
+        repeat(6) {
+            equipment.add(BASEBALL_BAT)
+        }
+
+        equipment.amount shouldBe 6
+    }
+
+    @Test
+    fun `equipment holds 2 items in hand and 3 items in reserve`() {
         repeat(5) {
             equipment.add(BASEBALL_BAT)
         }
@@ -46,7 +57,7 @@ class EquipmentTest {
     }
 
     @Test
-    fun `equipment holds 2 specific items in hand and 3 specific items in reserve` () {
+    fun `equipment holds 2 specific items in hand and 3 specific items in reserve`() {
         equipment.add(BASEBALL_BAT)
         equipment.add(FRYING_PAN)
         equipment.add(KATANA)
@@ -59,7 +70,7 @@ class EquipmentTest {
 
     @Test
     fun `decreaseMaxAmount() should not remove items if InReserve holds 2 items`() {
-        val reserve: ShrinkableEquipmentHolder = InReserve()
+        val reserve: SizableEquipmentHolder = InReserve()
         reserve.add(BASEBALL_BAT)
         reserve.add(FRYING_PAN)
 
@@ -71,7 +82,7 @@ class EquipmentTest {
 
     @Test
     fun `decreaseMaxAmount() should remove 1 item if InReserve holds 3 items`() {
-        val reserve: ShrinkableEquipmentHolder = InReserve()
+        val reserve: SizableEquipmentHolder = InReserve()
         reserve.add(BASEBALL_BAT)
         reserve.add(FRYING_PAN)
         reserve.add(KATANA)
@@ -84,7 +95,7 @@ class EquipmentTest {
 
     @Test
     fun `decreaseMaxAmount() should not be executed if maxAmount is already 0`() {
-        val reserve: ShrinkableEquipmentHolder = InReserve()
+        val reserve: SizableEquipmentHolder = InReserve()
         reserve.add(BASEBALL_BAT)
         reserve.add(FRYING_PAN)
 
@@ -101,7 +112,7 @@ class EquipmentTest {
     }
 
     @Test
-    fun `equipment should lose one item when max amount is less then amount of items in equipment ` () {
+    fun `equipment should lose one item when max amount is less then amount of items in equipment`() {
         equipment.add(BASEBALL_BAT)
         equipment.add(FRYING_PAN)
         equipment.add(KATANA)

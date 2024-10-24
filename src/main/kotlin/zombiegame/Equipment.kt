@@ -71,6 +71,7 @@ class InHands : EquipmentList() {
 
 class InReserve : EquipmentList(), SizableEquipmentHolder {
     override var maxAmount: Int = STANDARD_MAX_IN_RESERVE_AMOUNT
+    private var wasUpgraded = false
 
     override fun decreaseMaxAmount(): EquipmentType? {
         if (maxAmount == 0) {
@@ -89,7 +90,13 @@ class InReserve : EquipmentList(), SizableEquipmentHolder {
     }
 
     override fun upgradeMaxAmount() {
-        maxAmount = UPGRADED_MAX_IN_RESERVE_AMOUNT
+        if (wasUpgraded) {
+            return
+        }
+        wasUpgraded = true
+
+        maxAmount = if (maxAmount == STANDARD_MAX_IN_RESERVE_AMOUNT) UPGRADED_MAX_IN_RESERVE_AMOUNT
+        else maxAmount + 1
     }
 
 

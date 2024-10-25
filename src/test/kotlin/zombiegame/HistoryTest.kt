@@ -5,6 +5,8 @@ import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import zombiegame.EquipmentType.KATANA
+import zombiegame.SkillType.PLUS_ONE_ACTION
+import zombiegame.SkillType.PLUS_ONE_DIE_RANGED
 import zombiegame.TimeUtils.Companion.FIXED_CLOCK
 
 class HistoryTest {
@@ -66,6 +68,35 @@ class HistoryTest {
         }
 
         history.list shouldContain  """Survivor "Hantz" has levelled up to "Yellow"."""
+    }
+
+    @Test
+    fun `history records that a survivor has a new skill`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+
+        repeat(7) {
+            hantz.killZombie()
+        }
+
+        hantz.skills shouldContain PLUS_ONE_ACTION
+        history.list shouldContain  """Survivor "Hantz" has new skill "+1 Action"."""
+    }
+
+    @Test
+    fun `history records that a survivor has 2 new skills`()
+    {
+        val hantz = Survivor("Hantz")
+        game.add(hantz)
+
+        repeat(19) {
+            hantz.killZombie()
+        }
+
+        hantz.skills shouldBe setOf(PLUS_ONE_ACTION, PLUS_ONE_DIE_RANGED)
+        history.list shouldContain  """Survivor "Hantz" has new skill "+1 Action"."""
+        history.list shouldContain  """Survivor "Hantz" has new skill "+1 Die (Ranged)"."""
     }
 
     @Test

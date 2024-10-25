@@ -49,6 +49,10 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     override fun notifyLevelChange(survivor: Survivor, level: LevelType) {
         mutableList.add("""Survivor "${survivor.name}" has levelled up to "${level}".""")
     }
+
+    override fun notifyNewSkill(survivor: Survivor, skillType: SkillType) {
+        mutableList.add("""Survivor "${survivor.name}" has new skill "${skillType.description}".""")
+    }
 }
 
 

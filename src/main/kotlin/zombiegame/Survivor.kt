@@ -34,6 +34,7 @@ class Survivor(val name: String) : SurvivorObservable {
             return skillTree.getAllSkillsUpTo(level, skill)
         }
 
+    private var oldSkills = setOf<SkillType>()
 
     fun act(): Boolean {
         if (actionCount >= maxActionCount) {
@@ -64,7 +65,14 @@ class Survivor(val name: String) : SurvivorObservable {
     }
 
     fun killZombie() {
+        oldSkills = skills
         score.incrementExperience()
+
+        val newSkills = skills - oldSkills
+        if (newSkills.isNotEmpty()) {
+            observers.forEach { it.notifyNewSkill(this, newSkills.first()) }
+        }
+
         if (skills.contains(PLUS_ONE_ACTION)) {
             maxActionCount = UPGRADED_MAX_ACTIONS
         }
@@ -101,5 +109,6 @@ interface SurvivorObserver {
     fun notifyAddEquipment(survivor: Survivor, item: EquipmentType)
     fun notifyWound(survivor: Survivor)
     fun notifyLevelChange(survivor: Survivor, level: LevelType)
+    fun notifyNewSkill(survivor: Survivor, skillType: SkillType)
 }
 

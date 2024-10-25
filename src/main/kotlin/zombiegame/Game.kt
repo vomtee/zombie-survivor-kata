@@ -57,6 +57,7 @@ class Game : SurvivorObserver, GameObservable {
     override fun notifyAddEquipment(survivor: Survivor, item: EquipmentType) {}
     override fun notifyWound(survivor: Survivor) {}
     override fun notifyLevelChange(survivor: Survivor, level: LevelType) {}
+    override fun notifyNewSkill(survivor: Survivor, skillType: SkillType) {}
 
     override fun addObserver(observer: GameObserver) {
         this.observer = observer

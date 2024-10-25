@@ -48,6 +48,16 @@ class EquipmentTest {
     }
 
     @Test
+    fun `when max equipment amount was already reduced upgrading should only increase max amount by 1` () {
+        equipment.decreaseMaxAmount()
+
+        equipment.maxAmount shouldBe 4
+        equipment.upgradeMaxAmount()
+
+        equipment.maxAmount shouldBe 5
+    }
+
+    @Test
     fun `upgrading equipment does only work once` () {
         equipment.upgradeMaxAmount()
         equipment.maxAmount shouldBe 6
@@ -91,17 +101,6 @@ class EquipmentTest {
 
         reserve.content shouldBeEqual listOf(BASEBALL_BAT, FRYING_PAN)
     }
-
-    @Test
-    fun `when max equipment amount was already reduced upgrading should only increase max amount by 1` () {
-        equipment.decreaseMaxAmount()
-
-        equipment.maxAmount shouldBe 4
-        equipment.upgradeMaxAmount()
-
-        equipment.maxAmount shouldBe 5
-    }
-
 
     @Test
     fun `decreaseMaxAmount() should remove 1 item if InReserve holds 3 items`() {

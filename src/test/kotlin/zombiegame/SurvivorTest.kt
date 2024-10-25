@@ -1,6 +1,7 @@
 package zombiegame
 
 import Survivor
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNot
 import io.kotest.matchers.shouldNotBe
@@ -12,7 +13,9 @@ import zombiegame.EquipmentType.FRYING_PAN
 import zombiegame.EquipmentType.KATANA
 import zombiegame.EquipmentType.PISTOL
 import zombiegame.LevelType.Blue
+import zombiegame.LevelType.Red
 import zombiegame.LevelType.Yellow
+import zombiegame.SkillType.HOARD
 import zombiegame.SkillType.PLUS_ONE_ACTION
 
 class SurvivorTest {
@@ -81,7 +84,7 @@ class SurvivorTest {
             survivor.killZombie()
         }
 
-        survivor.skills.contains(PLUS_ONE_ACTION) shouldBe true
+        survivor.skills shouldContain PLUS_ONE_ACTION
 
         repeat(3) {
             survivor.act()
@@ -103,7 +106,7 @@ class SurvivorTest {
     }
 
     @Test
-    fun `equipment should lose one item when max amount is less then amount of items in equipment ` () {
+    fun `equipment should lose one item when max amount is less then amount of items in equipment `() {
         val equipment = survivor.equipment
         equipment.add(BASEBALL_BAT)
         equipment.add(FRYING_PAN)
@@ -120,6 +123,27 @@ class SurvivorTest {
     }
 
     @Test
+    fun `survivor can carry one more item when unlocking hoard skill`() {
+        val equipment = survivor.equipment
+
+        var wasAdded = true
+        repeat(5) {
+            wasAdded = wasAdded && equipment.add(BOTTLED_WATER)
+        }
+        wasAdded shouldBe true
+
+        equipment.add(BOTTLED_WATER) shouldBe false
+
+        repeat(2 * Red.experience) {
+            survivor.killZombie()
+        }
+        Score.levelAndSkill(survivor.experience) shouldBe Pair(Red, 2)
+        survivor.skills shouldContain HOARD
+
+        equipment.add(BOTTLED_WATER) shouldBe true
+    }
+
+    @Test
     fun `survivor begins with 0 experience and level blue`() {
         survivor.experience shouldBe 0
         survivor.level shouldBe Blue
@@ -133,7 +157,7 @@ class SurvivorTest {
 
     @Test
     fun `survivor killing 7 zombies levels up `() {
-        survivor.level shouldBe  Blue
+        survivor.level shouldBe Blue
         repeat(7) {
             survivor.killZombie()
         }

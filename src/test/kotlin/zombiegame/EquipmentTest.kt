@@ -10,7 +10,7 @@ import zombiegame.EquipmentType.KATANA
 import zombiegame.EquipmentType.PISTOL
 
 class EquipmentTest {
-    val equipment = Equipment()
+    private val equipment = Equipment()
 
     @Test
     fun `equipment initially is empty nothing`() {

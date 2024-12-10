@@ -1,7 +1,5 @@
 package zombiegame
 
-import Survivor
-import SurvivorObserver
 import java.time.Clock
 import java.time.LocalTime
 

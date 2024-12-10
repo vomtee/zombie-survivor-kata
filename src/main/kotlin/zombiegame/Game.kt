@@ -1,7 +1,5 @@
 package zombiegame
 
-import Survivor
-import SurvivorObserver
 import zombiegame.LevelType.Blue
 
 class Game : SurvivorObserver, GameObservable {

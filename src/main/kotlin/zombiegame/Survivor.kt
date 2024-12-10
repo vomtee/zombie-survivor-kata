@@ -1,9 +1,5 @@
-import zombiegame.Equipment
-import zombiegame.EquipmentType
-import zombiegame.LevelType
-import zombiegame.Score
-import zombiegame.SkillTree
-import zombiegame.SkillType
+package zombiegame
+
 import zombiegame.SkillType.HOARD
 import zombiegame.SkillType.PLUS_ONE_ACTION
 

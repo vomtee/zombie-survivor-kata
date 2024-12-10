@@ -1,9 +1,5 @@
-import zombiegame.Equipment
-import zombiegame.EquipmentType
-import zombiegame.LevelType
-import zombiegame.Score
-import zombiegame.SkillTree
-import zombiegame.SkillType
+package zombiegame
+
 import zombiegame.SkillType.HOARD
 import zombiegame.SkillType.PLUS_ONE_ACTION
 
@@ -11,7 +7,7 @@ const val MAX_WOUNDS = 2
 const val STANDARD_MAX_ACTIONS = 3
 const val UPGRADED_MAX_ACTIONS = 4
 
-class Survivor(val name: String) : SurvivorObservable {
+class Survivor(val name: String) {
     val equipment = Equipment()
     var wounds = 0
         private set
@@ -88,7 +84,7 @@ class Survivor(val name: String) : SurvivorObservable {
         }
     }
 
-    override fun addObserver(observer: SurvivorObserver) {
+    fun addObserver(observer: SurvivorObserver) {
         observers.add(observer)
     }
 
@@ -97,10 +93,6 @@ class Survivor(val name: String) : SurvivorObservable {
         observers.forEach { it.notifyAddEquipment(this, item) }
         return result
     }
-}
-
-interface SurvivorObservable {
-    fun addObserver(observer: SurvivorObserver)
 }
 
 interface SurvivorObserver {

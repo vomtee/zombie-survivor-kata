@@ -1,6 +1,5 @@
 package zombiegame
 
-import Survivor
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

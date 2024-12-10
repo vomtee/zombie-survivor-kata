@@ -1,6 +1,5 @@
 package zombiegame
 
-import Survivor
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNot

@@ -27,7 +27,7 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     }
 
     override fun notifyLevelUp(level: LevelType) {
-        mutableList.add("""Game has levelled up to "${level}".""")
+        mutableList.add("""Game has levelled up to "$level".""")
     }
 
     override fun notifyDead(survivor: Survivor) {
@@ -37,7 +37,7 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     override fun notifyLevel(survivor: Survivor) {}
 
     override fun notifyAddEquipment(survivor: Survivor, item: EquipmentType) {
-        mutableList.add("""Survivor "${survivor.name}" has added "${item}" to its equipment.""")
+        mutableList.add("""Survivor "${survivor.name}" has added "$item" to its equipment.""")
     }
 
     override fun notifyWound(survivor: Survivor) {
@@ -45,7 +45,7 @@ class History(private val clock: Clock, gameObservable: GameObservable): GameObs
     }
 
     override fun notifyLevelChange(survivor: Survivor, level: LevelType) {
-        mutableList.add("""Survivor "${survivor.name}" has levelled up to "${level}".""")
+        mutableList.add("""Survivor "${survivor.name}" has levelled up to "$level".""")
     }
 
     override fun notifyNewSkill(survivor: Survivor, skillType: SkillType) {
